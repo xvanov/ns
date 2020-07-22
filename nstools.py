@@ -6,6 +6,7 @@ curl command to get all raw scores for natio
 
 import requests
 
+# TODO: create class
 
 def get_nation_stats(url=str, headers=dict):
     response = requests.get(url, headers=headers)
