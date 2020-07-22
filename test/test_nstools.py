@@ -1,4 +1,9 @@
 # local dependencies
+import sys
+import os
+sys.path.append('../')
+
+#print(sys.path)
 from nstools import *
 
 def test_get_nations_stats():

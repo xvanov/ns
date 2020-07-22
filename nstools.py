@@ -14,8 +14,10 @@ def get_nation_stats(url=str, headers=dict):
     else:
         return f'Response status code: {response.status_code}'
 
+
 if __name__ == '__main__':
-    headers = {'User-Agent':'UserAgent Example'}
-    url = "https://www.nationstates.net/cgi-bin/api.cgi?nation=north_kalandia&q=census;scale=all;mode=score"
-    stats = get_nation_stats(url, headers)
+    headers = {'User-Agent':'UserAgent Example', "X-Password": "koraxhun123"}
+    urlStats = "https://www.nationstates.net/cgi-bin/api.cgi?nation=north_kalandia&q=census;scale=all;mode=score"
+    urlIssues = "https://www.nationstates.net/cgi-bin/api.cgi?nation=north_kalandia&q=issues"
+    stats = get_nation_stats(urlIssues, headers)
     print(stats)
