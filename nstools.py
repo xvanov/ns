@@ -3,30 +3,79 @@
 curl command to get all raw scores for natio
  curl "https://www.nationstates.net/cgi-bin/api.cgi?nation=north_kalandia&q=census;scale=all;mode=score” -A "UserAgent Example"
 '''
-
+# external dependencies
 import requests
+import os 
 
-# TODO: create class
+# local dependencies
+import dirtools 
 
-def get_nation_stats(url=str, headers=dict):
-    response = requests.get(url, headers=headers)
-    # TODO: parse stats and create dictionary
-    if response:
-        return response.text
-    else:
-        return f'Response status code: {response.status_code}'
 
-def get_nation_issues(url=str, headers=dict):
-     response = requests.get(url, headers=headers)
-     # TODO: parse issues, return issue id
-    if response:
-        return response.text
-    else:
-        return f'Response status code: {response.status_code}'
 
+# main class
+# TODO: parsing issues and stats
+# TODO: documentation
+
+class NationStatesAPI():
+    def __init__(self, dirs, headers):
+        self.dirs = dirs
+        self.nationName = dirs.nationName
+        self.headers = headers
+
+    def get_nation_stats(self, url=str, headers=dict):
+        response = requests.get(url, headers=headers)
+        if response:
+            statsPage = response.text
+            nationStatsDict = self.parse_nation_stats(statsPage)
+            return nationStatsDict
+        else:
+            return f'Response status code: {response.status_code}'
+
+    def get_nation_issues(self, issuesPath, url=None, headers=None):
+        issuesFile = os.path.join(issuesPath, 'raw_issues')
+        if headers == None:
+            headers = self.headers
+        if url:
+            response = requests.get(url, headers=headers)
+            if response:
+                issuesRawPage = response.text
+                with open(issuesFile, 'w') as f:
+                    print(issuesRawPage, file=f)
+            else:
+                return f'Response status code: {response.status_code}'
+
+        issuesDict = self.parse_nation_issues(issuesFile)
+        return issuesDict
+
+    def parse_nation_issues(self, issuesFile):
+        with open(issuesFile, 'r') as f:
+            rawIssues = f.read()
+        
+        breakupOnIssues = rawIssues.split('<ISSUE ')
+        print(breakupOnIssues)
+        print(len(breakupOnIssues))
+
+        issuesDict = {}
+        return issuesDict
+
+    def parse_nation_stats(self, statsPage):
+        statsDict = {}
+        return statsDict
+
+# run
 if __name__ == '__main__':
-    headers = {'User-Agent':'UserAgent Example', "X-Password": "koraxhun123"}
+    # TODO: create a safer way to input password
+    nationName = 'north_kalandia'
+    headers = {'User-Agent':'Nation Info Getter', "X-Password": "koraxhun123"}
+
+    # TODO: the below urls should be created in functions in nstools.py
     urlStats = "https://www.nationstates.net/cgi-bin/api.cgi?nation=north_kalandia&q=census;scale=all;mode=score"
     urlIssues = "https://www.nationstates.net/cgi-bin/api.cgi?nation=north_kalandia&q=issues"
-    stats = get_nation_stats(urlIssues, headers)
+    
+    # TODO: driver code function 
+
+    baseDir = os.getcwd()
+    dirs = dirtools.Dirs(baseDir, nationName)
+    nationStatesClass = NationStatesAPI(dirs, headers)
+    stats = nationStatesClass.get_nation_issues(dirs.issuesDir)
     print(stats)
