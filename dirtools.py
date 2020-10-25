@@ -16,6 +16,7 @@ class Dirs():
         for directory in dirsToCreate:
             if not os.path.isdir(directory):
                 os.mkdir(directory)
+                print('creating directory: ', directory)
 
 # run
 if __name__ == '__main__':
