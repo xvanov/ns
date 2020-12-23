@@ -1,9 +1,10 @@
 # local dependencies
-import sys
-import os
-sys.path.append('../')
+import sys, os, inspect
 
-#print(sys.path)
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir)
+
 from nstools import *
 
 def test_get_nations_stats():

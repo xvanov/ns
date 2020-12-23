@@ -76,11 +76,11 @@ if __name__ == '__main__':
 
     # TODO: the below urls should be created in functions in nstools.py
     urlStats = "https://www.nationstates.net/cgi-bin/api.cgi?nation=north_kalandia&q=census;scale=all;mode=score"
-    
     # TODO: driver code function 
 
     baseDir = os.getcwd()
     dirs = dirtools.Dirs(baseDir, nationName)
     nationStatesClass = NationStatesAPI(dirs, headers)
+    urlIssues = nationStatesClass.generate_issues_url()
     issuesList = nationStatesClass.get_nation_issues(dirs.issuesDir, urlIssues)
     print(issuesList)
