@@ -20,7 +20,7 @@ class NationStatesAPI():
         self.nationName = dirs.nationName
         self.headers = headers
 
-    def get_nation_stats(self, url=str, headers=dict):
+    def get_nation_stats(self, url=str, headers=None):
         response = requests.get(url, headers=headers)
         if response:
             statsPage = response.text
@@ -58,6 +58,7 @@ class NationStatesAPI():
         return issuesList
 
     def parse_nation_stats(self, statsPage):
+        print(statsPage)
         statsDict = {}
         return statsDict
 
@@ -80,6 +81,10 @@ if __name__ == '__main__':
     baseDir = os.getcwd()
     dirs = dirtools.Dirs(baseDir, nationName)
     nationStatesClass = NationStatesAPI(dirs, headers)
+    '''
     urlIssues = nationStatesClass.generate_issues_url()
     issuesList = nationStatesClass.get_nation_issues(dirs.issuesDir, urlIssues)
     print(issuesList)
+    '''
+    stats = nationStatesClass.get_nation_stats(url=urlStats, headers=headers)
+    print(stats)
