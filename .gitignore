@@ -1,3 +1,5 @@
 tmp
 *.pyc
 north_kalandia
+.ipynb_checkpoints*
+
