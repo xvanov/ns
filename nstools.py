@@ -4,14 +4,13 @@ curl command to get all raw scores for natio
 '''
 # external dependencies
 import requests
-import os 
+import os
 import re
 
 # local dependencies
-import dirtools 
+import dirtools
 
 # main class
-# TODO: parsing issues and stats
 # TODO: documentation
 
 class NationStatesAPI():
