@@ -57,8 +57,24 @@ class NationStatesAPI():
         return issuesList
 
     def parse_nation_stats(self, statsPage):
-        print(statsPage)
-        statsDict = {}
+        lines = statsPage.split('\n')
+        prev = False
+        stats = {}
+        for line in lines:
+            pattern = re.findall('id="\d+"', line)
+            if pattern != []:
+                idrow = True
+                cur = pattern[0]
+                censusid = re.findall('\d+', cur)[0]
+            else:
+                idrow = False
+                if prev == True:
+                    score = re.findall('>.*<', line)[0]
+                    score = score[1:-1]
+                    score = float(score)
+                    stats[censusid] = score
+            prev = idrow
+        statsDict = stats
         return statsDict
 
     def generate_issues_url(self):
