@@ -3,6 +3,7 @@ import os
 
 # local dependencies
 import nstools
+import getpass
 import dirtools
 import issue_results_api
 # main class
@@ -40,9 +41,8 @@ class MainPipeline():
 if __name__ == '__main__':
     nationName = 'north_kalandia'
     baseDir = os.getcwd()
-
-    headers = {'User-Agent':'Nation Info Getter', "X-Password": "koraxhun123"} 
-        
+    password = getpass.getpass(prompt='Enter your password: ')
+    headers = {'User-Agent':'Nation Info Getter', "X-Password": password}         
     dirs = dirtools.Dirs(baseDir, nationName)
     nsClass = nstools.NationStatesAPI(dirs, headers)
     ipa = issue_results_api.IssuePredictionAPI(dirs)
